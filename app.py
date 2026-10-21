@@ -17,6 +17,6 @@ def test():
     # testing .env, we'll prob use Open-Meteo and won't need API Keys
     return f'{SUPER_SECRET_KEY} KEY'
 
-    # if you are running with "python app.py", otherwise run via "flask run --debug" (--app app can be ommited here)
+    # if you are running with "python app.py"; otherwise run via "flask run --debug" (--app app can be ommited here) to enter debug mode
 if __name__ == '__main__':
     app.run(debug=True)
