@@ -1,0 +1,132 @@
+/* main colors and overall styling */
+:root {
+  --bg: #0e1f16;
+  --bg-glow: #17402a;
+  --accent: #d9f27e;
+  --text: #f1f7ee;
+  --muted: #9dbba6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+  font-family:
+    "Poppins",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    Roboto,
+    sans-serif;
+  background:
+    radial-gradient(900px 500px at 50% -10%, var(--bg-glow), transparent 70%),
+    var(--bg);
+}
+
+/* base.html styles */
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer {
+  padding: 18px 24px 26px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.hero {
+  text-align: center;
+  width: 100%;
+}
+
+.hero-icon {
+  font-size: 4.5rem;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.hero-title {
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--accent);
+}
+.hero-subtitle {
+  margin: 0 auto 28px;
+  max-width: 460px;
+  color: var(--muted);
+}
+
+/* _search.html styles */
+.search {
+  display: flex;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background-color: #1a3a28;
+  border: 1px solid rgba(217, 242, 126, 0.08);
+  border-radius: 999px;
+  padding: 5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+.search:focus-within {
+  border-color: var(--accent);
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 12px 20px;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-style: italic;
+}
+.search-input::placeholder {
+  color: var(--muted);
+}
+
+.search-button {
+  border: 0;
+  cursor: pointer;
+  padding: 0 26px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0e1f16;
+  font-family: inherit;
+  font-weight: 600;
+  transition:
+    transform 0.15s,
+    filter 0.15s;
+}
+.search-button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.topbar {
+  margin-bottom: 30px;
+}
