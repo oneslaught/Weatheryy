@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Weather{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body class="{% block body_class %}{% endblock %}">
+    <main class="page">{% block content %}{% endblock %}</main>
+    <footer class="footer">
+      Data:
+      <a href="https://open-meteo.com/" target="_blank" rel="noopener"
+        >Open-Meteo</a
+      >
+    </footer>
+  </body>
+</html>
