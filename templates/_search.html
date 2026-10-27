@@ -1,4 +1,12 @@
-<form class="search" action="" method="get">
-  <input class="search-input" type="text" name="city" />
+<form class="search" action="{{ url_for('weather') }}" method="get">
+  <input
+    class="search-input"
+    type="text"
+    name="city"
+    placeholder="Find city..."
+    autocomplete="off"
+    required
+    {% if autofocus %}autofocus{% endif %}
+  />
   <button class="search-button" type="submit" aria-label="Find">Find</button>
 </form>
