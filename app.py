@@ -8,7 +8,7 @@ def index():
 
 @app.route("/weather")
 def weather():
-    city = request.args.get("city", "")
+    city = request.args.get("city", "").strip()
     if not city:
         # nothing was typed: go back to the home page
         return redirect(url_for("index"))
