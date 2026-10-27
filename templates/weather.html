@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{{ city }} - Weather{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  {% include "_search.html" %}
+</header>
+
+<div class="dashboard">
+  <h1>{{ city }}</h1>
+</div>
+{% endblock %}
