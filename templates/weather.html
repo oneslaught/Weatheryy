@@ -8,6 +8,10 @@
 </header>
 
 <div class="dashboard">
-  <h1>{{ city }}</h1>
+  {% if place %}
+    <h1>{{ place.name }}, {{ place.country }}</h1>
+  {% else %}
+    <h1>Nothing found for "{{ city }}"</h1>
+  {% endif %}
 </div>
 {% endblock %}
