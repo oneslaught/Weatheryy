@@ -1,4 +1,5 @@
 from flask import Flask, redirect, render_template, request, url_for
+from weather import geocode
 
 app = Flask(__name__)
 
@@ -12,7 +13,9 @@ def weather():
     if not city:
         # nothing was typed: go back to the home page
         return redirect(url_for("index"))
-    return render_template("weather.html", city=city)
+    place = geocode(city)
+    status = 200 if place else 404
+    return render_template("weather.html", city=city, place=place), status
 
     # if you are running with "python app.py"; otherwise run via "flask run --debug" (--app app can be ommited here) to enter debug mode
 if __name__ == '__main__':
