@@ -18,5 +18,5 @@ def weather():
     return render_template("weather.html", city=city, data=data), status
 
     # if you are running with "python app.py"; otherwise run via "flask run --debug" (--app app can be ommited here) to enter debug mode
-# if __name__ == '__main__':
-#     app.run(debug=True) --- github pages test
+if __name__ == '__main__':
+    app.run(debug=True)
