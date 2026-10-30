@@ -229,3 +229,44 @@ body {
   min-width: 3ch;
   text-align: right;
 }
+
+/* 7-day card styles */
+
+.card-week {
+  grid-column: span 8;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px
+}
+
+.day {
+  text-align: center;
+  padding: 14px 6px;
+  border-radius: 18px;
+  background:#1a3a28
+}
+
+.day p {
+  margin: 4px 0;
+}
+
+.day-name {
+  font-weight: 600;
+  color: #d9f27e
+}
+
+.day-icon {
+  font-size: 1.8rem;
+}
+
+.day-temp span,
+.day-desc {
+  color: var(--muted);
+}
+
+.day-desc{
+  font-size: 0.8rem;
+}
