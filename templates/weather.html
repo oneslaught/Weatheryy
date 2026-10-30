@@ -6,14 +6,32 @@
 <header class="topbar">
   {% include "_search.html" %}
 </header>
-
+{% if data.error %}
+  <h1>Nothing found for "{{ city }}"</h1>
+{% else %}
+<h1 class="city-name">{{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{% endif %}</h1>
 <div class="dashboard">
-  {% if data.error %}
-    <h1>Nothing found for "{{ city }}"</h1>
-  {% else %}
-    <h1>{{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{% endif %}</h1>
-    <p>{{ data.current.icon }} {{ data.current.description }}</p>
-    <p>{{ data.current.weekday }}: {{ data.current.temperature }}°C, humidity {{ data.current.humidity }}%</p>
+  <section class="card card-current">
+    <p class="card-place">
+      {{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{% endif %}
+    </p>
+    <div class="current-main">
+      <span class="current-icon" aria-hidden="true">{{ data.current.icon }}</span>
+      <div>
+        <h1 class="current-title">{{ data.current.description }}</h1>
+        <p class="current-day">{{ data.current.weekday }}</p>
+      </div>
+    </div>
+    <p class="current-temp">{{ data.current.temperature }}°</p>
+    <ul class="stats">
+      <li class="stats-row">
+        <span>Cloudy</span><span class="stats-line"></span><strong>{{ data.current.cloud_cover }}%</strong>
+      </li>
+      <li class="stats-row">
+        <span>Humidity</span><span class="stats-line"></span><strong>{{ data.current.humidity }}%</strong>
+      </li>
+    </ul>
+  </section>
   {% endif %}
 </div>
 {% endblock %}

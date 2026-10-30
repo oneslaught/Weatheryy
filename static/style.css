@@ -36,6 +36,9 @@ body {
   max-width: 1280px;
   margin: 0 auto;
   padding: 32px 24px 24px;
+}
+
+.is-home .page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,4 +132,100 @@ body {
 
 .topbar {
   margin-bottom: 30px;
+}
+
+.city-name {
+  text-align: center;
+  font-size: 3.2rem;
+}
+
+/* weather.html: ! grid of cards ! */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 22px;
+}
+
+.card {
+  background: #1a3a28;
+  border: 1px solid rgba(217, 242, 126, 0.08);
+  border-radius: 28px;
+  padding: 28px;
+  min-width: 0;
+}
+
+.card-title {
+  margin: 0 0 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.card-place {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+/* current weather card */
+.card-current {
+  grid-column: span 4;
+}
+
+.current-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.current-icon {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.current-title {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.current-day {
+  margin: 4px 0 0;
+  font-weight: 600;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.current-temp {
+  margin: 14px 0 18px;
+  font-size: 4.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stats-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(217, 242, 126, 0.35);
+}
+
+.stats-row strong {
+  min-width: 3ch;
+  text-align: right;
 }
