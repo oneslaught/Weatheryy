@@ -32,6 +32,19 @@
       </li>
     </ul>
   </section>
+  <section class="card card-week">
+    <h2 class="card-title">7-day forecast</h2>
+    <div class="week">
+      {% for day in data.daily %}
+        <div class="day">
+          <p class="day-name">{{ day.weekday }}</p>
+          <p class="day-icon">{{ day.icon }}</p>
+          <p class="day-temp">{{ day.max }}° / {{ day.min }}°</p>
+          <p class="day-desc">{{ day.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
   {% endif %}
 </div>
 {% endblock %}

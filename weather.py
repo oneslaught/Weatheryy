@@ -67,6 +67,9 @@ def fetch_forecast(latitude, longitude):
             "temperature_2m", "relative_humidity_2m",
             "cloud_cover", "weather_code", "is_day",
         ]),
+        "daily": "weather_code,temperature_2m_max,temperature_2m_min",
+        "forecast_days": 7,
+        "timezone": "auto",
     }
     response = requests.get(FORECAST_URL, params=params, timeout=TIMEOUT)
     response.raise_for_status()
@@ -87,15 +90,33 @@ def build_result(place, raw):
         "icon": icon,
         "weekday": now.strftime("%A"),
     }
+    
+    daily = raw["daily"]
+    days = []
+    for i, date in enumerate(daily["time"]):
+        description, icon = describe(daily["weather_code"][i])
+        if i == 0:
+            weekday = "Today"
+        else:
+            weekday = datetime.fromisoformat(date).strftime("%A")
+        days.append({
+            "weekday": weekday,
+            "description": description,
+            "icon": icon,
+            "max": round(daily["temperature_2m_max"][i]),
+            "min": round(daily["temperature_2m_min"][i]),
+        })
+        
     return {
         "error": None,
         "city": {"name": place["name"], "country": place["country"]},
         "current": current,
+        "daily" : days,
     }
 
 def get_weather(city):
     place = geocode(city)
     if place is None:
-        return {"error": "city_not_found", "city": None, "current": None}
+        return {"error": "city_not_found", "city": None, "current": None, "daily": None}
     raw = fetch_forecast(place["latitude"], place["longitude"])
     return build_result(place, raw)
