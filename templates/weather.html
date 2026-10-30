@@ -12,6 +12,7 @@
     <h1>Nothing found for "{{ city }}"</h1>
   {% else %}
     <h1>{{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{% endif %}</h1>
+    <p>{{ data.current.icon }} {{ data.current.description }}</p>
     <p>{{ data.current.weekday }}: {{ data.current.temperature }}°C, humidity {{ data.current.humidity }}%</p>
   {% endif %}
 </div>
