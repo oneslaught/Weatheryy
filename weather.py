@@ -67,7 +67,7 @@ def fetch_forecast(latitude, longitude):
             "temperature_2m", "relative_humidity_2m",
             "cloud_cover", "weather_code", "is_day",
         ]),
-        "daily": "weather_code,temperature_2m_max,temperature_2m_min",
+        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
         "forecast_days": 7,
         "timezone": "auto",
     }
@@ -95,23 +95,26 @@ def build_result(place, raw):
     days = []
     for i, date in enumerate(daily["time"]):
         description, icon = describe(daily["weather_code"][i])
+        d = datetime.fromisoformat(date)
         if i == 0:
             weekday = "Today"
         else:
-            weekday = datetime.fromisoformat(date).strftime("%A")
+            weekday =d.strftime("%A")
         days.append({
             "weekday": weekday,
+            "date": f"{d.strftime('%B')} {d.day}",
             "description": description,
             "icon": icon,
             "max": round(daily["temperature_2m_max"][i]),
             "min": round(daily["temperature_2m_min"][i]),
+            "rain" : daily["precipitation_probability_max"][i] or 0,
         })
         
     return {
         "error": None,
         "city": {"name": place["name"], "country": place["country"]},
         "current": current,
-        "daily" : days,
+        "daily": days,
     }
 
 def get_weather(city):
