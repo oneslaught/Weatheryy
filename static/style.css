@@ -233,18 +233,20 @@ body {
 /* 7-day card styles */
 
 .card-week {
-  grid-column: span 8;
+  grid-column: span 5;
 }
 
 .week {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 12px
+  gap: 1px;
 }
 
 .day {
-  text-align: center;
-  padding: 14px 6px;
+  display: grid;
+  grid-template-columns: 7em 2.5em 4.5em 1fr;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
   border-radius: 18px;
   background:#1a3a28
 }
@@ -258,8 +260,33 @@ body {
   color: #d9f27e
 }
 
+.day-date {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
 .day-icon {
   font-size: 1.8rem;
+}
+
+.rain-icon {
+  font-size: 1.3rem;
+}
+
+.day-rain{
+  display:grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.day-temp {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
 }
 
 .day-temp span,
@@ -269,4 +296,5 @@ body {
 
 .day-desc{
   font-size: 0.8rem;
+  color: white;
 }
