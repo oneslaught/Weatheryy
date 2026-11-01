@@ -248,7 +248,7 @@ body {
   gap: 10px;
   text-align: left;
   border-radius: 18px;
-  background:#1a3a28
+  background: #1a3a28;
 }
 
 .day p {
@@ -257,7 +257,7 @@ body {
 
 .day-name {
   font-weight: 600;
-  color: #d9f27e
+  color: #d9f27e;
 }
 
 .day-date {
@@ -273,8 +273,8 @@ body {
   font-size: 1.3rem;
 }
 
-.day-rain{
-  display:grid;
+.day-rain {
+  display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: 3px;
@@ -294,7 +294,34 @@ body {
   color: var(--muted);
 }
 
-.day-desc{
+.day-desc {
   font-size: 0.8rem;
   color: white;
+}
+
+/* Metrics Card */
+
+.card-metrics {
+  grid-column: span 3;
+}
+
+.metric-name {
+  font-weight: 600;
+  color: #d9f27e;
+  margin: 0.5em 0em;
+}
+
+.metrics-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric {
+  margin: 0.5em 0em;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-values {
+  font-size: 1.3em;
 }
