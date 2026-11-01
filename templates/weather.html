@@ -6,9 +6,6 @@
 <header class="topbar">
   {% include "_search.html" %}
 </header>
-{% if data.error %}
-  <h1>Nothing found for "{{ city }}"</h1>
-{% else %}
 <h1 class="city-name">{{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{% endif %}</h1>
 <div class="dashboard">
   <section class="card card-current">
@@ -48,6 +45,5 @@
       {% endfor %}
     </div>
   </section>
-  {% endif %}
 </div>
 {% endblock %}

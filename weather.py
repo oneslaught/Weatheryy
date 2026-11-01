@@ -117,9 +117,20 @@ def build_result(place, raw):
         "daily": days,
     }
 
+def _error(code):
+    return {
+        "error": code,
+        "city": None,
+        "current": None,
+    }
+
 def get_weather(city):
-    place = geocode(city)
-    if place is None:
-        return {"error": "city_not_found", "city": None, "current": None, "daily": None}
-    raw = fetch_forecast(place["latitude"], place["longitude"])
-    return build_result(place, raw)
+    try:
+        place = geocode(city)
+        if place is None:
+            return _error("city_not_found")
+        raw = fetch_forecast(place["latitude"], place["longitude"])
+        return build_result(place, raw)
+    except (requests.RequestException, KeyError, IndexError, TypeError, ValueError):
+        # no internet, timeout, bad status or an unexpected answer from the API
+        return _error("service_unavailable")
