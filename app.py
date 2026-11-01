@@ -14,8 +14,14 @@ def weather():
         # nothing was typed: go back to the home page
         return redirect(url_for("index"))
     data = get_weather(city)
-    status = 404 if data["error"] else 200
-    return render_template("weather.html", city=city, data=data), status
+    if data["error"]:
+        status = 404 if data["error"] == "city_not_found" else 503
+        return render_template("error.html", error=data["error"], city=city), status
+    return render_template("weather.html", city=city, data=data)
+
+@app.errorhandler(404)
+def page_not_found(_error):
+    return render_template("error.html", error="page_not_found", city=""), 404
 
     # if you are running with "python app.py"; otherwise run via "flask run --debug" (--app app can be ommited here) to enter debug mode
 if __name__ == '__main__':

@@ -1,13 +1,12 @@
-{% extends "base.html" %} {% block title %}{{ city }} - Weather{% endblock %} {%
-block content %}
-<header class="topbar">{% include "_search.html" %}</header>
-{% if data.error %}
-<h1>Nothing found for "{{ city }}"</h1>
-{% else %}
-<h1 class="city-name">
-  {{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{%
-  endif %}
-</h1>
+{% extends "base.html" %}
+
+{% block title %}{{ city }} - Weather{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  {% include "_search.html" %}
+</header>
+<h1 class="city-name">{{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{% endif %}</h1>
 <div class="dashboard">
   <section class="card card-current">
     <p class="card-place">
