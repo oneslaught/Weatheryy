@@ -10,10 +10,13 @@
 <div class="dashboard">
   <section class="card card-current">
     <p class="card-place">
-      {{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{% endif %}
+      {{ data.city.name }}{% if data.city.country %}, {{ data.city.country }}{%
+      endif %}
     </p>
     <div class="current-main">
-      <span class="current-icon" aria-hidden="true">{{ data.current.icon }}</span>
+      <span class="current-icon" aria-hidden="true"
+        >{{ data.current.icon }}</span
+      >
       <div>
         <h1 class="current-title">{{ data.current.description }}</h1>
         <p class="current-day">{{ data.current.weekday }}</p>
@@ -22,10 +25,12 @@
     <p class="current-temp">{{ data.current.temperature }}°</p>
     <ul class="stats">
       <li class="stats-row">
-        <span>Cloudy</span><span class="stats-line"></span><strong>{{ data.current.cloud_cover }}%</strong>
+        <span>Cloudy</span><span class="stats-line"></span
+        ><strong>{{ data.current.cloud_cover }}%</strong>
       </li>
       <li class="stats-row">
-        <span>Humidity</span><span class="stats-line"></span><strong>{{ data.current.humidity }}%</strong>
+        <span>Humidity</span><span class="stats-line"></span
+        ><strong>{{ data.current.humidity }}%</strong>
       </li>
     </ul>
   </section>
@@ -33,17 +38,41 @@
     <h2 class="card-title">7-day forecast</h2>
     <div class="week">
       {% for day in data.daily %}
-        <div class="day">
-          <div>
-            <p class="day-name">{{ day.weekday }}</p>
-            <p class="day-date">{{ day.date }}</p>
-          </div>
-          <p class="day-icon">{{ day.icon }}</p>
-          <p class="day-rain"><span class="rain-icon">💧</span>{{ day.rain }}%</p>
-          <p class="day-temp">{{ day.max }}°<span class="stats-line"></span>{{ day.min }}°</p>
+      <div class="day">
+        <div>
+          <p class="day-name">{{ day.weekday }}</p>
+          <p class="day-date">{{ day.date }}</p>
         </div>
+        <p class="day-icon">{{ day.icon }}</p>
+        <p class="day-rain"><span class="rain-icon">💧</span>{{ day.rain }}%</p>
+        <p class="day-temp">
+          {{ day.max }}°<span class="stats-line"></span>{{ day.min }}°
+        </p>
+      </div>
       {% endfor %}
     </div>
   </section>
+  <section class="card card-metrics">
+    <h2 class="card-title">Now</h2>
+    <div class="metrics-wrapper">
+      <div class="metric">
+        <span class="metric-name">Feels like </span>
+        <span class="metric-values">{{ data.current.real_feel }}°</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">Wind </span>
+        <span class="metric-values">{{ data.current.wind_speed }} km/h</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">Pressure </span>
+        <span class="metric-values">{{ data.current.pressure }} hPa</span>
+      </div>
+      <div class="metric">
+        <span class="metric-name">UV Index </span>
+        <span class="metric-values">{{ data.current.uv_index }} UV</span>
+      </div>
+    </div>
+  </section>
+  {% endif %}
 </div>
 {% endblock %}
