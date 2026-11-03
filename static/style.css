@@ -325,3 +325,44 @@ body {
 .metric-values {
   font-size: 1.3em;
 }
+
+/* hourly forecast card */
+.card-hourly {
+  grid-column: span 7;
+}
+
+.hourly {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 8px;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.hourly-item {
+  flex: 0 0 auto;
+  min-width: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.hourly-time {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hourly-icon {
+  font-size: 1.6rem;
+}
+.hourly-temp {
+  font-size: 1.1rem;
+}
+.hourly-rain {
+  font-size: 0.75rem;
+  color: var(--muted);
+}

@@ -5,6 +5,7 @@ GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 TIMEOUT = 8  # seconds to wait for the API
 LANGUAGE = "en"  # language of city and country names
+HOURS_SHOWN = 24  # length of the hourly forecast
 
 # WMO weather code (description, icon)
 WEATHER_CODES = {
@@ -68,6 +69,7 @@ def fetch_forecast(latitude, longitude):
             "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index",
         ]),
         "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+        "hourly": "temperature_2m,precipitation_probability,weather_code,is_day",
         "forecast_days": 7,
         "timezone": "auto",
     }
@@ -75,8 +77,11 @@ def fetch_forecast(latitude, longitude):
     response.raise_for_status()
     return response.json()
 
-def describe(code):
-    return WEATHER_CODES.get(code, ("No data", "❔"))
+def describe(code, is_day=True):
+    description, icon = WEATHER_CODES.get(code, ("No data", "❔"))
+    if not is_day and code in (0, 1):
+        icon = "🌙"
+    return description, icon
 
 def build_result(place, raw):
     cur = raw["current"]
@@ -114,11 +119,26 @@ def build_result(place, raw):
             "rain" : daily["precipitation_probability_max"][i] or 0,
         })
         
+    h = raw["hourly"]
+    current_hour = cur["time"][:13]  # e.g. "2026-10-28T01"
+    start = next((i for i, t in enumerate(h["time"]) if t[:13] >= current_hour), 0)
+    hourly = []
+    for i in range(start, min(start + HOURS_SHOWN, len(h["time"]))):
+        hour_description, hour_icon = describe(h["weather_code"][i], bool(h["is_day"][i]))
+        hourly.append({
+            "time": h["time"][i][11:16],  # "2026-10-28T01:00" =>> "01:00"
+            "temperature": round(h["temperature_2m"][i]),
+            "precipitation_probability": round(h["precipitation_probability"][i]),
+            "description": hour_description,
+            "icon": hour_icon,
+        })
+        
     return {
         "error": None,
         "city": {"name": place["name"], "country": place["country"]},
         "current": current,
         "daily": days,
+        "hourly": hourly,
     }
 
 def _error(code):
@@ -126,6 +146,7 @@ def _error(code):
         "error": code,
         "city": None,
         "current": None,
+        "hourly": [],
     }
 
 def get_weather(city):
