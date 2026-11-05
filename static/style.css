@@ -303,6 +303,8 @@ body {
 
 .card-metrics {
   grid-column: span 3;
+  display: flex;
+  flex-direction: column;
 }
 
 .metric-name {
@@ -311,17 +313,49 @@ body {
   margin: 0.5em 0em;
 }
 
-.metrics-wrapper {
+.metrics-grid-wrapper {
+  flex: 1; /* fill the space under the title */
+  min-height: 0; /* never force the card taller */
   display: flex;
   flex-direction: column;
+  justify-content: center; /* vertical centering */
+  align-items: center;
+}
+
+.metrics-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  font-size: 0.8em;
 }
 
 .metric {
-  margin: 0.5em 0em;
   display: flex;
   flex-direction: column;
 }
 
 .metric-values {
-  font-size: 1.3em;
+  /* font-size: 1.3em; */
+}
+
+.metric-card {
+  background: #ffffff0d;
+  border: 1px solid rgba(217, 242, 126, 0.08);
+  border-radius: 16px;
+  padding: 15px 10px;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-icon-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.metric-icon {
+  width: 1.2em;
+  height: 1.2em;
+  flex-shrink: 0;
 }
