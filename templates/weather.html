@@ -182,14 +182,18 @@ block content %}
       {% for hour in data.hourly %}
       <li class="hourly-item">
         <span class="hourly-time">{{ hour.time }}</span>
-        <span class="hourly-icon" title="{{ hour.description }}">{{ hour.icon }}</span>
+        <span class="hourly-icon" title="{{ hour.description }}"
+          >{{ hour.icon }}</span
+        >
         <strong class="hourly-temp">{{ hour.temperature }}°</strong>
         {% if hour.precipitation_probability is not none %}
-        <span class="hourly-rain">💧 {{ hour.precipitation_probability }}%</span>
+        <span class="hourly-rain"
+          >💧 {{ hour.precipitation_probability }}%</span
+        >
         {% endif %}
       </li>
       {% endfor %}
     </ul>
   </section>
 </div>
-{% endblock %}
+{% endif %} {% endblock %}
