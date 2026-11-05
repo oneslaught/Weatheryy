@@ -66,7 +66,7 @@ def fetch_forecast(latitude, longitude):
         "longitude": longitude,
         "current": ",".join([
             "temperature_2m", "relative_humidity_2m",
-            "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index",
+            "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index", "visibility", "dewpoint_2m",
         ]),
         "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
         "hourly": "temperature_2m,precipitation_probability,weather_code,is_day",
@@ -97,7 +97,9 @@ def build_result(place, raw):
         "real_feel": round(cur["apparent_temperature"]),
         "pressure": round(cur["surface_pressure"]),
         "wind_speed": round(cur["wind_speed_10m"]),
-        "uv_index": round(cur["uv_index"])
+        "uv_index": round(cur["uv_index"]),
+        "visibility": round(cur["visibility"]/1000),
+        "dew_point": round(cur["dewpoint_2m"])
     }
     
     daily = raw["daily"]
