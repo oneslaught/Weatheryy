@@ -7,7 +7,6 @@ TIMEOUT = 8  # seconds to wait for the API
 LANGUAGE = "en"  # language of city and country names
 HOURS_SHOWN = 24  # length of the hourly forecast
 
-
 # WMO weather code (description, icon)
 WEATHER_CODES = {
     0: ("Clear sky", "☀️"),
@@ -67,9 +66,9 @@ def fetch_forecast(latitude, longitude):
         "longitude": longitude,
         "current": ",".join([
             "temperature_2m", "relative_humidity_2m",
-            "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index", "visibility", "dewpoint_2m",
+            "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index",
         ]),
-        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset",
         "hourly": "temperature_2m,precipitation_probability,weather_code,is_day",
         "forecast_days": 7,
         "timezone": "auto",
@@ -84,26 +83,21 @@ def describe(code, is_day=True):
         icon = "🌙"
     return description, icon
 
-def _round(value):
-    return None if value is None else _round(value)
-
 def build_result(place, raw):
     cur = raw["current"]
     now = datetime.fromisoformat(cur["time"])
     description, icon = describe(cur["weather_code"])
     current = {
-        "temperature": _round(cur["temperature_2m"]),
-        "humidity": _round(cur["relative_humidity_2m"]),
-        "cloud_cover": _round(cur["cloud_cover"]),
+        "temperature": round(cur["temperature_2m"]),
+        "humidity": round(cur["relative_humidity_2m"]),
+        "cloud_cover": round(cur["cloud_cover"]),
         "description": description,
         "icon": icon,
         "weekday": now.strftime("%A"),
-        "real_feel": _round(cur["apparent_temperature"]),
-        "pressure": _round(cur["surface_pressure"]),
-        "wind_speed": _round(cur["wind_speed_10m"]),
-        "uv_index": _round(cur["uv_index"]),
-        "visibility": _round(cur["visibility"]/1000),
-        "dew_point": _round(cur["dewpoint_2m"])
+        "real_feel": round(cur["apparent_temperature"]),
+        "pressure": round(cur["surface_pressure"]),
+        "wind_speed": round(cur["wind_speed_10m"]),
+        "uv_index": round(cur["uv_index"]),
     }
     
     daily = raw["daily"]
@@ -120,11 +114,14 @@ def build_result(place, raw):
             "date": f"{d.strftime('%B')} {d.day}",
             "description": description,
             "icon": icon,
-            "max": _round(daily["temperature_2m_max"][i]),
-            "min": _round(daily["temperature_2m_min"][i]),
+            "max": round(daily["temperature_2m_max"][i]),
+            "min": round(daily["temperature_2m_min"][i]),
             "rain" : daily["precipitation_probability_max"][i] or 0,
         })
         
+    current["precipitation_probability"] = days[0]["rain"]
+    current["sunrise"] = daily["sunrise"][0][11:16]
+    current["sunset"] = daily["sunset"][0][11:16]
     h = raw["hourly"]
     current_hour = cur["time"][:13]  # e.g. "2026-10-28T01"
     start = next((i for i, t in enumerate(h["time"]) if t[:13] >= current_hour), 0)
@@ -162,6 +159,6 @@ def get_weather(city):
             return _error("city_not_found")
         raw = fetch_forecast(place["latitude"], place["longitude"])
         return build_result(place, raw)
-    except (requests.RequestException, KeyError, IndexError, TypeError, ValueError):
-        # no internet, timeout, bad status or an unexpected answer from the API
+    except (requests.RequestException, KeyError, IndexError, TypeError, ValueError) as e:
+        print("WEATHER ERROR:", repr(e))
         return _error("service_unavailable")
