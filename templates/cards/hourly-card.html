@@ -1,0 +1,17 @@
+<section class="card card-hourly">
+  <h2 class="card-title">Next {{ data.hourly | length }} hours</h2>
+  <ul class="hourly">
+    {% for hour in data.hourly %}
+    <li class="hourly-item">
+      <span class="hourly-time">{{ hour.time }}</span>
+      <span class="hourly-icon" title="{{ hour.description }}"
+        >{{ hour.icon }}</span
+      >
+      <strong class="hourly-temp">{{ hour.temperature }}°</strong>
+      {% if hour.precipitation_probability is not none %}
+      <span class="hourly-rain">💧 {{ hour.precipitation_probability }}%</span>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
