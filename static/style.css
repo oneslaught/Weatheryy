@@ -186,14 +186,14 @@ body {
   color: var(--accent);
 }
 
-.current-day {
+.current-desc {
   margin: 4px 0 0;
   font-weight: 600;
   color: var(--accent);
   opacity: 0.85;
 }
 
-.current-temp {
+.current-data {
   margin: 14px 0 18px;
   font-size: 4.2rem;
   font-weight: 700;

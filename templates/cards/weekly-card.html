@@ -1,0 +1,18 @@
+<section class="card card-week">
+  <h2 class="card-title">7-day forecast</h2>
+  <div class="week">
+    {% for day in data.daily %}
+    <div class="day">
+      <div>
+        <p class="day-name">{{ day.weekday }}</p>
+        <p class="day-date">{{ day.date }}</p>
+      </div>
+      <p class="day-icon">{{ day.icon }}</p>
+      <p class="day-rain"><span class="rain-icon">💧</span>{{ day.rain }}%</p>
+      <p class="day-temp">
+        {{ day.max }}°<span class="stats-line"></span>{{ day.min }}°
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
