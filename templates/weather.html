@@ -200,18 +200,18 @@ block content %}
       <div class="sun-item">
         <span class="sun-icon" aria-hidden="true">🌅</span>
         <span class="sun-label">Sunrise</span>
-        <strong class="sun-value">{{ data.today.sunrise }}</strong>
+        <strong class="sun-value">{{ data.current.sunrise }}</strong>
       </div>
       <div class="sun-item">
         <span class="sun-icon" aria-hidden="true">🌇</span>
         <span class="sun-label">Sunset</span>
-        <strong class="sun-value">{{ data.today.sunset }}</strong>
+        <strong class="sun-value">{{ data.current.sunset }}</strong>
       </div>
       <div class="sun-item">
         <span class="sun-icon" aria-hidden="true">💧</span>
         <span class="sun-label">Rain chance</span>
         <strong class="sun-value">
-          {% if data.today.precipitation_probability is not none %}{{ data.today.precipitation_probability }}%{% else %}-{% endif %}
+          {% if data.current.precipitation_probability is not none %}{{ data.current.precipitation_probability }}%{% else %}-{% endif %}
         </strong>
       </div>
     </div>
