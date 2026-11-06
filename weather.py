@@ -39,6 +39,9 @@ WEATHER_CODES = {
     99: ("Thunderstorm with heavy hail", "⛈️"),
 }
 
+def _round(value):
+    return None if value is None else round(value)
+
 def geocode(city):
     """City name -> dict with name, country and coordinates (None if not found)."""
     response = requests.get(
@@ -66,9 +69,9 @@ def fetch_forecast(latitude, longitude):
         "longitude": longitude,
         "current": ",".join([
             "temperature_2m", "relative_humidity_2m",
-            "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index",
+            "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index", "visibility", "dewpoint_2m", 
         ]),
-        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset",
+        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset,sunrise,sunset",
         "hourly": "temperature_2m,precipitation_probability,weather_code,is_day",
         "forecast_days": 7,
         "timezone": "auto",
@@ -89,18 +92,18 @@ def build_result(place, raw):
     description, icon = describe(cur["weather_code"])
     local_now = datetime.now(timezone.utc) + timedelta(seconds=raw["utc_offset_seconds"])
     current = {
-        "temperature": round(cur["temperature_2m"]),
-        "humidity": round(cur["relative_humidity_2m"]),
-        "cloud_cover": round(cur["cloud_cover"]),
+        "temperature": _round(cur["temperature_2m"]),
+        "humidity": _round(cur["relative_humidity_2m"]),
+        "cloud_cover": _round(cur["cloud_cover"]),
         "description": description,
         "icon": icon,
         "weekday": now.strftime("%A"),
-        "real_feel": round(cur["apparent_temperature"]),
-        "pressure": round(cur["surface_pressure"]),
-        "wind_speed": round(cur["wind_speed_10m"]),
-        "uv_index": round(cur["uv_index"]),
-        "visibility": round(cur["visibility"]/1000),
-        "dew_point": round(cur["dewpoint_2m"]),
+        "real_feel": _round(cur["apparent_temperature"]),
+        "pressure": _round(cur["surface_pressure"]),
+        "wind_speed": _round(cur["wind_speed_10m"]),
+        "uv_index": _round(cur["uv_index"]),
+        "visibility": _round(cur["visibility"]/1000),
+        "dew_point": _round(cur["dewpoint_2m"]),
         "local_time": local_now.strftime("%H:%M"),
         "local_date": f"{local_now.strftime('%B')} {local_now.day}",
     }
@@ -119,8 +122,8 @@ def build_result(place, raw):
             "date": f"{d.strftime('%B')} {d.day}",
             "description": description,
             "icon": icon,
-            "max": round(daily["temperature_2m_max"][i]),
-            "min": round(daily["temperature_2m_min"][i]),
+            "max": _round(daily["temperature_2m_max"][i]),
+            "min": _round(daily["temperature_2m_min"][i]),
             "rain" : daily["precipitation_probability_max"][i] or 0,
         })
         
