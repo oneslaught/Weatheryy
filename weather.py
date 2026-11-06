@@ -7,6 +7,7 @@ TIMEOUT = 8  # seconds to wait for the API
 LANGUAGE = "en"  # language of city and country names
 HOURS_SHOWN = 24  # length of the hourly forecast
 
+
 # WMO weather code (description, icon)
 WEATHER_CODES = {
     0: ("Clear sky", "☀️"),
@@ -83,23 +84,26 @@ def describe(code, is_day=True):
         icon = "🌙"
     return description, icon
 
+def _round(value):
+    return None if value is None else _round(value)
+
 def build_result(place, raw):
     cur = raw["current"]
     now = datetime.fromisoformat(cur["time"])
     description, icon = describe(cur["weather_code"])
     current = {
-        "temperature": round(cur["temperature_2m"]),
-        "humidity": round(cur["relative_humidity_2m"]),
-        "cloud_cover": round(cur["cloud_cover"]),
+        "temperature": _round(cur["temperature_2m"]),
+        "humidity": _round(cur["relative_humidity_2m"]),
+        "cloud_cover": _round(cur["cloud_cover"]),
         "description": description,
         "icon": icon,
         "weekday": now.strftime("%A"),
-        "real_feel": round(cur["apparent_temperature"]),
-        "pressure": round(cur["surface_pressure"]),
-        "wind_speed": round(cur["wind_speed_10m"]),
-        "uv_index": round(cur["uv_index"]),
-        "visibility": round(cur["visibility"]/1000),
-        "dew_point": round(cur["dewpoint_2m"])
+        "real_feel": _round(cur["apparent_temperature"]),
+        "pressure": _round(cur["surface_pressure"]),
+        "wind_speed": _round(cur["wind_speed_10m"]),
+        "uv_index": _round(cur["uv_index"]),
+        "visibility": _round(cur["visibility"]/1000),
+        "dew_point": _round(cur["dewpoint_2m"])
     }
     
     daily = raw["daily"]
@@ -116,8 +120,8 @@ def build_result(place, raw):
             "date": f"{d.strftime('%B')} {d.day}",
             "description": description,
             "icon": icon,
-            "max": round(daily["temperature_2m_max"][i]),
-            "min": round(daily["temperature_2m_min"][i]),
+            "max": _round(daily["temperature_2m_max"][i]),
+            "min": _round(daily["temperature_2m_min"][i]),
             "rain" : daily["precipitation_probability_max"][i] or 0,
         })
         
@@ -129,8 +133,8 @@ def build_result(place, raw):
         hour_description, hour_icon = describe(h["weather_code"][i], bool(h["is_day"][i]))
         hourly.append({
             "time": h["time"][i][11:16],  # "2026-10-28T01:00" =>> "01:00"
-            "temperature": round(h["temperature_2m"][i]),
-            "precipitation_probability": round(h["precipitation_probability"][i]),
+            "temperature": _round(h["temperature_2m"][i]),
+            "precipitation_probability": _round(h["precipitation_probability"][i]),
             "description": hour_description,
             "icon": hour_icon,
         })
