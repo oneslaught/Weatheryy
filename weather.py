@@ -66,9 +66,9 @@ def fetch_forecast(latitude, longitude):
         "longitude": longitude,
         "current": ",".join([
             "temperature_2m", "relative_humidity_2m",
-            "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index", "visibility", "dewpoint_2m",
+            "cloud_cover", "weather_code", "is_day", "apparent_temperature", "surface_pressure", "wind_speed_10m", "uv_index",
         ]),
-        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset",
         "hourly": "temperature_2m,precipitation_probability,weather_code,is_day",
         "forecast_days": 7,
         "timezone": "auto",
@@ -124,6 +124,9 @@ def build_result(place, raw):
             "rain" : daily["precipitation_probability_max"][i] or 0,
         })
         
+    current["precipitation_probability"] = days[0]["rain"]
+    current["sunrise"] = daily["sunrise"][0][11:16]
+    current["sunset"] = daily["sunset"][0][11:16]
     h = raw["hourly"]
     current_hour = cur["time"][:13]  # e.g. "2026-10-28T01"
     start = next((i for i, t in enumerate(h["time"]) if t[:13] >= current_hour), 0)
@@ -132,8 +135,8 @@ def build_result(place, raw):
         hour_description, hour_icon = describe(h["weather_code"][i], bool(h["is_day"][i]))
         hourly.append({
             "time": h["time"][i][11:16],  # "2026-10-28T01:00" =>> "01:00"
-            "temperature": round(h["temperature_2m"][i]),
-            "precipitation_probability": round(h["precipitation_probability"][i]),
+            "temperature": _round(h["temperature_2m"][i]),
+            "precipitation_probability": _round(h["precipitation_probability"][i]),
             "description": hour_description,
             "icon": hour_icon,
         })
@@ -161,6 +164,6 @@ def get_weather(city):
             return _error("city_not_found")
         raw = fetch_forecast(place["latitude"], place["longitude"])
         return build_result(place, raw)
-    except (requests.RequestException, KeyError, IndexError, TypeError, ValueError):
-        # no internet, timeout, bad status or an unexpected answer from the API
+    except (requests.RequestException, KeyError, IndexError, TypeError, ValueError) as e:
+        print("WEATHER ERROR:", repr(e))
         return _error("service_unavailable")
