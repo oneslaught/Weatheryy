@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
@@ -87,6 +87,7 @@ def build_result(place, raw):
     cur = raw["current"]
     now = datetime.fromisoformat(cur["time"])
     description, icon = describe(cur["weather_code"])
+    local_now = datetime.now(timezone.utc) + timedelta(seconds=raw["utc_offset_seconds"])
     current = {
         "temperature": round(cur["temperature_2m"]),
         "humidity": round(cur["relative_humidity_2m"]),
@@ -99,7 +100,9 @@ def build_result(place, raw):
         "wind_speed": round(cur["wind_speed_10m"]),
         "uv_index": round(cur["uv_index"]),
         "visibility": round(cur["visibility"]/1000),
-        "dew_point": round(cur["dewpoint_2m"])
+        "dew_point": round(cur["dewpoint_2m"]),
+        "local_time": local_now.strftime("%H:%M"),
+        "local_date": f"{local_now.strftime('%B')} {local_now.day}",
     }
     
     daily = raw["daily"]
