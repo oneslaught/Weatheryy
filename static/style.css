@@ -163,11 +163,6 @@ body {
   color: var(--muted);
 }
 
-.card-place {
-  margin: 0 0 18px;
-  color: var(--muted);
-}
-
 /* current weather card */
 .card-current {
   grid-column: span 4;
@@ -196,6 +191,16 @@ body {
   font-weight: 600;
   color: var(--accent);
   opacity: 0.85;
+}
+
+.current-local {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.current-local strong {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
 }
 
 .current-temp {
@@ -335,7 +340,7 @@ body {
 }
 
 .metric-values {
-  /* font-size: 1.3em; */
+  font-size: 1.3em;
 }
 
 .metric-card {
