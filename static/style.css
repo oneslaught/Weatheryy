@@ -193,16 +193,6 @@ body {
   opacity: 0.85;
 }
 
-.current-local {
-  margin: 2px 0 0;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-.current-local strong {
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-}
-
 .current-temp {
   margin: 14px 0 18px;
   font-size: 4.2rem;
@@ -226,7 +216,7 @@ body {
 
 .stats-line {
   flex: 1;
-  height: 1px;
+  height: 2px;
   background: rgba(217, 242, 126, 0.35);
 }
 

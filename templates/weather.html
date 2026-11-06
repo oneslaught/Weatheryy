@@ -10,16 +10,23 @@ block content %}
 </h1>
 <div class="dashboard">
   <section class="card card-current">
-    <h2 class="card-title">
-      Currently
-    </h2>
+    <h2 class="card-title">Currently</h2>
+    <div class="current-main">
+      <span class="current-icon" aria-hidden="true"
+        >⌛</span
+      >
+      <div>
+        <h1 class="current-title">{{ data.current.local_date }}</h1>
+        <p class="current-day">{{ data.current.weekday }}</p>
+      </div>
+    </div>
+    <p class="current-temp">{{ data.current.local_time }}</p>
     <div class="current-main">
       <span class="current-icon" aria-hidden="true"
         >{{ data.current.icon }}</span
       >
       <div>
         <h1 class="current-title">{{ data.current.description }}</h1>
-        <p class="current-day">{{ data.current.weekday }}</p>
       </div>
     </div>
     <p class="current-temp">{{ data.current.temperature }}°</p>
@@ -194,7 +201,7 @@ block content %}
       {% endfor %}
     </ul>
   </section>
-    <section class="card card-sun">
+  <section class="card card-sun">
     <h2 class="card-title">Sun and rain today</h2>
     <div class="sun">
       <div class="sun-item">
@@ -211,7 +218,8 @@ block content %}
         <span class="sun-icon" aria-hidden="true">💧</span>
         <span class="sun-label">Rain chance</span>
         <strong class="sun-value">
-          {% if data.current.precipitation_probability is not none %}{{ data.current.precipitation_probability }}%{% else %}-{% endif %}
+          {% if data.current.precipitation_probability is not none %}{{
+          data.current.precipitation_probability }}%{% else %}-{% endif %}
         </strong>
       </div>
     </div>
