@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="eng">
+<html lang="eng" data-theme="{{ theme }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,5 +17,6 @@
         >Open-Meteo</a
       >
     </footer>
+    <script src="{{ url_for('static', filename='theme.js') }}"></script>
   </body>
 </html>

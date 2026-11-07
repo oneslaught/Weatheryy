@@ -3,6 +3,13 @@ from weather import get_weather
 
 app = Flask(__name__)
 
+THEMES = {"green", "pink"}
+
+@app.context_processor
+def inject_theme():
+    theme = request.cookies.get("theme", "green")
+    return {"theme": theme if theme in THEMES else "green"}
+
 @app.route("/")
 def index():
     return render_template("index.html")

@@ -5,9 +5,25 @@
   --bg3: rgba(255, 255, 255, 0.04);
   --bg-glow: #17402a;
   --accent: #d9f27e;
+  --on-accent: #0e1f16;
   --text: #f1f7ee;
   --muted: #9dbba6;
   --border: rgba(217, 242, 126, 0.08);
+  --line: rgba(217, 242, 126, 0.35);
+}
+
+/* pink theme */
+[data-theme="pink"] {
+  --bg: #22101a;
+  --bg2: #3d1b2e;
+  --bg3: rgba(255, 255, 255, 0.04);
+  --bg-glow: #4a1d36;
+  --accent: #f7a6d0;
+  --on-accent: #22101a;
+  --text: #fbeef4;
+  --muted: #c9a0b5;
+  --border: rgba(247, 166, 208, 0.1);
+  --line: rgba(247, 166, 208, 0.35);
 }
 
 * {
@@ -122,7 +138,7 @@ body {
   padding: 0 26px;
   border-radius: 999px;
   background-color: var(--accent);
-  color: #0e1f16;
+  color: var(--on-accent);
   font-family: inherit;
   font-weight: 600;
   transition:
@@ -151,7 +167,13 @@ body {
 .topbar .unit-switch {
   grid-column: 3;
   justify-self: start;
-  margin:0;
+  margin: 0;
+}
+
+.topbar .theme-switch {
+  grid-column: 1;
+  justify-self: end;
+  margin: 0;
 }
 
 .city-name {
@@ -161,26 +183,34 @@ body {
 }
 
 /* ----- °C / °F button styles ----- */
-.unit-switch {
+.unit-switch,
+.theme-switch {
   display: flex;
   width: fit-content;
-  background: #1a3a28;
-  border: 1px solid rgba(217, 242, 126, 0.08);
+  background: var(--bg2);
+  border: 1px solid var(--border);
   border-radius: 999px;
   padding: 12px 20px;
 }
 
-.unit-switch a {
+.unit-switch a,
+.theme-switch button {
   padding: 6px 16px;
+  border: 0;
   border-radius: 999px;
+  background: transparent;
   color: var(--muted);
   text-decoration: none;
+  font-family: inherit;
+  font-size: inherit;
   font-weight: 600;
+  cursor: pointer;
 }
 
-.unit-switch a.active {
+.unit-switch a.active,
+.theme-switch button.active {
   background: var(--accent);
-  color: #0e1f16;
+  color: var(--on-accent, #0e1f16);
 }
 
 /* ----- weather.html ----- */
@@ -258,7 +288,7 @@ body {
 .stats-line {
   flex: 1;
   height: 2px;
-  background-color: rgba(217, 242, 126, 0.35);
+  background-color: var(--line);
 }
 
 .stats-row strong {
@@ -297,7 +327,8 @@ body {
   font-weight: 400;
 }
 
-.day-icon, .hourly-icon {
+.day-icon,
+.hourly-icon {
   font-size: 1.8rem;
 }
 
@@ -457,7 +488,6 @@ body {
   font-size: 1.3rem;
 }
 
-
 /*------laptop------*/
 @media (max-width: 1280px) {
   body {
@@ -493,6 +523,36 @@ body {
   }
 }
 
+@media (max-width: 1000px) {
+  .topbar {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 14px;
+  }
+
+  .topbar .search {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+  }
+
+  .topbar .theme-switch {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+  }
+
+  .topbar .unit-switch {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .topbar-solo .theme-switch {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
 /* ------phone------ */
 @media (max-width: 640px) {
   .dashboard > .card {
@@ -503,14 +563,14 @@ body {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .topbar {
-    grid-template-columns: 1fr;
+  .unit-switch,
+  .theme-switch {
+    padding: 8px 12px;
   }
 
-  .topbar .search,
-  .topbar .unit-switch {
-    grid-column: 1;
-    justify-self: center;
+  .unit-switch a,
+  .theme-switch button {
+    padding: 6px 12px;
   }
 
   .city-name {
