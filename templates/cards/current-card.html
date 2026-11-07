@@ -1,13 +1,5 @@
 <section class="card card-current">
-  <div class="card-header">
-    <h2 class="card-title">Currently</h2>
-    <div class="unit-switch">
-      <a href="{{ url_for('weather', city=city, unit='c') }}"
-        class="{{ 'active' if unit == 'c' }}">°C</a>
-      <a href="{{ url_for('weather', city=city, unit='f') }}"
-        class="{{ 'active' if unit == 'f' }}">°F</a>
-    </div>
-  </div>
+  <h2 class="card-title">Currently</h2>
   <div class="current-main">
     <span class="current-icon" aria-hidden="true">🕰️</span>
     <div>

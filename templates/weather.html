@@ -1,6 +1,13 @@
 {% extends "base.html" %} {% block title %}{{ city }} - Weather{% endblock %} {%
 block content %}
-<header class="topbar">{% include "_search.html" %}</header>
+<header class="topbar">{% include "_search.html" %}
+<div class="unit-switch">
+    <a href="{{ url_for('weather', city=city, unit='c') }}"
+      class="{{ 'active' if unit == 'c' }}">°C</a>
+    <a href="{{ url_for('weather', city=city, unit='f') }}"
+      class="{{ 'active' if unit == 'f' }}">°F</a>
+</div>
+</header>
 {% if data.error %}
 <h1>Nothing found for "{{ city }}"</h1>
 {% else %}
