@@ -7,7 +7,7 @@
       <span class="hourly-icon" title="{{ hour.description }}"
         >{{ hour.icon }}</span
       >
-      <strong class="hourly-temp">{{ hour.temperature }}°</strong>
+      <strong>{{ hour.temperature }}°</strong>
       {% if hour.precipitation_probability is not none %}
       <span class="hourly-rain">💧 {{ hour.precipitation_probability }}%</span>
       {% endif %}
