@@ -456,3 +456,64 @@ body {
 .sun-value {
   font-size: 1.3rem;
 }
+
+
+/*------laptop------*/
+@media (max-width: 1280px) {
+  body {
+    overflow-y: auto;
+  }
+
+  .card-current,
+  .card-week {
+    grid-column: span 6;
+  }
+
+  .card-metrics {
+    grid-column: span 12;
+  }
+
+  .metrics-wrapper {
+    width: 100%;
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/*------tablet------- */
+@media (max-width: 1024px) {
+  .card-current,
+  .card-week,
+  .card-hourly,
+  .card-sun {
+    grid-column: span 12;
+  }
+
+  .metrics-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ------phone------ */
+@media (max-width: 640px) {
+  .dashboard > .card {
+    grid-column: span 12;
+  }
+
+  .metrics-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar .search,
+  .topbar .unit-switch {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .city-name {
+    font-size: 2rem;
+  }
+}
