@@ -1,3 +1,19 @@
+<div class="theme-switch" role="group" aria-label="Color theme">
+  <button
+    class="{{ 'active' if theme == 'green' }}"
+    type="button"
+    data-theme-value="green"
+  >
+    Green
+  </button>
+  <button
+    class="{{ 'active' if theme == 'pink' }}"
+    type="button"
+    data-theme-value="pink"
+  >
+    Pink
+  </button>
+</div>
 <form class="search" action="{{ url_for('weather') }}" method="get">
   <input
     class="search-input"
@@ -7,7 +23,12 @@
     placeholder="Find city..."
     autocomplete="off"
     required
-    {% if autofocus %}autofocus{% endif %}
+    {%
+    if
+    autofocus
+    %}autofocus{%
+    endif
+    %}
   />
   <input type="hidden" name="unit" value="{{ unit or 'c'}}" />
   <button class="search-button" type="submit" aria-label="Find">Find</button>

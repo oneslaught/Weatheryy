@@ -1,22 +1,25 @@
-{% extends "base.html" %}
-{% block title %}Error - Weather{% endblock %}
-{% block body_class %}is-home{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Error - Weather{% endblock %} {%
+block body_class %}is-home{% endblock %} {% block content %}
 <section class="hero">
   {% if error == "city_not_found" %}
-    <div class="hero-icon" aria-hidden="true">🔍</div>
-    <h1 class="hero-title">City not found</h1>
-    <p class="hero-subtitle">We could not find "{{ city }}". Check the spelling and try again.</p>
+  <div class="hero-icon" aria-hidden="true">🔍</div>
+  <h1 class="hero-title">City not found</h1>
+  <p class="hero-subtitle">
+    We could not find "{{ city }}". Check the spelling and try again.
+  </p>
   {% elif error == "service_unavailable" %}
-    <div class="hero-icon" aria-hidden="true">🌩️</div>
-    <h1 class="hero-title">Service unavailable</h1>
-    <p class="hero-subtitle">We could not get the weather data. Please try again in a minute.</p>
+  <div class="hero-icon" aria-hidden="true">🌩️</div>
+  <h1 class="hero-title">Service unavailable</h1>
+  <p class="hero-subtitle">
+    We could not get the weather data. Please try again in a minute.
+  </p>
   {% else %}
-    <div class="hero-icon" aria-hidden="true">🧭</div>
-    <h1 class="hero-title">Page not found</h1>
-    <p class="hero-subtitle">There is nothing at this address. Go back to the search.</p>
-  {% endif %}
-  {% set autofocus = true %}
-  {% include "_search.html" %}
+  <div class="hero-icon" aria-hidden="true">🧭</div>
+  <h1 class="hero-title">Page not found</h1>
+  <p class="hero-subtitle">
+    There is nothing at this address. Go back to the search.
+  </p>
+  {% endif %} {% set autofocus = true %}
+  <div class="topbar topbar-solo">{% include "_search.html" %}</div>
 </section>
 {% endblock %}
