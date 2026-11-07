@@ -9,5 +9,6 @@
     required
     {% if autofocus %}autofocus{% endif %}
   />
+  <input type="hidden" name="unit" value="{{ unit or 'c'}}" />
   <button class="search-button" type="submit" aria-label="Find">Find</button>
 </form>

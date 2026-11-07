@@ -13,11 +13,14 @@ def weather():
     if not city:
         # nothing was typed: go back to the home page
         return redirect(url_for("index"))
-    data = get_weather(city)
+    unit = request.args.get("unit", "c")
+    if unit not in ("c", "f"):
+        unit = "c"
+    data = get_weather(city, unit)
     if data["error"]:
         status = 404 if data["error"] == "city_not_found" else 503
         return render_template("error.html", error=data["error"], city=city), status
-    return render_template("weather.html", city=city, data=data)
+    return render_template("weather.html", city=city, data=data, unit=unit)
 
 @app.errorhandler(404)
 def page_not_found(_error):

@@ -63,7 +63,7 @@ def geocode(city):
         "longitude": place["longitude"],
     }
     
-def fetch_forecast(latitude, longitude):
+def fetch_forecast(latitude, longitude, unit="c"):
     params = {
         "latitude": latitude,
         "longitude": longitude,
@@ -75,6 +75,7 @@ def fetch_forecast(latitude, longitude):
         "hourly": "temperature_2m,precipitation_probability,weather_code,is_day",
         "forecast_days": 7,
         "timezone": "auto",
+        "temperature_unit" : "fahrenheit" if unit == "f" else "celsius",
     }
     response = requests.get(FORECAST_URL, params=params, timeout=TIMEOUT)
     response.raise_for_status()
@@ -160,12 +161,12 @@ def _error(code):
         "hourly": [],
     }
 
-def get_weather(city):
+def get_weather(city, unit="c"):
     try:
         place = geocode(city)
         if place is None:
             return _error("city_not_found")
-        raw = fetch_forecast(place["latitude"], place["longitude"])
+        raw = fetch_forecast(place["latitude"], place["longitude"], unit)
         return build_result(place, raw)
     except (requests.RequestException, KeyError, IndexError, TypeError, ValueError) as e:
         print("WEATHER ERROR:", repr(e))

@@ -205,6 +205,38 @@ body {
   line-height: 1;
 }
 
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.card-header .card-title {
+  margin: 0;
+}
+
+.unit-switch {
+  display: inline-flex;
+  background: #1a3a28;
+  border: 1px solid rgba(217, 242, 126, 0.08);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.unit-switch a {
+  padding: 6px 16px;
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.unit-switch a.active {
+  background: var(--accent);
+  color: #0e1f16;
+}
+
 .stats {
   list-style: none;
   display: grid;
