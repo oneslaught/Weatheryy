@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime, timedelta, timezone
+import math
 
 GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
@@ -41,6 +42,26 @@ WEATHER_CODES = {
 
 def _round(value):
     return None if value is None else round(value)
+
+def _duration(delta):
+    minutes = int(delta.total_seconds() // 60)
+    hours, mins = divmod(minutes, 60)
+    return f"{hours}h {mins:02d}m" if hours else f"{mins}m"
+
+def _sun_info(daily, city_now):
+    sunrise = datetime.fromisoformat(daily["sunrise"][0])
+    sunset = datetime.fromisoformat(daily["sunset"][0])
+    if city_now < sunrise:
+        status = f"Sunrise in {_duration(sunrise - city_now)}"
+    elif city_now <= sunset:
+        status = f"Sunset in {_duration(sunset - city_now)}"
+    else:
+        next_sunrise = datetime.fromisoformat(daily["sunrise"][1])
+        status = f"Sunrise in {_duration(next_sunrise - city_now)}"
+    return {
+        "daylight": _duration(sunset - sunrise),
+        "sun_status": status,
+    }
 
 def geocode(city):
     """City name -> dict with name, country and coordinates (None if not found)."""
@@ -128,9 +149,9 @@ def build_result(place, raw):
             "rain" : daily["precipitation_probability_max"][i] or 0,
         })
         
-    current["precipitation_probability"] = days[0]["rain"]
     current["sunrise"] = daily["sunrise"][0][11:16]
     current["sunset"] = daily["sunset"][0][11:16]
+    current.update(_sun_info(daily, local_now.replace(tzinfo=None)))
     h = raw["hourly"]
     current_hour = cur["time"][:13]  # e.g. "2026-10-28T01"
     start = next((i for i, t in enumerate(h["time"]) if t[:13] >= current_hour), 0)
