@@ -1,12 +1,35 @@
 {% extends "base.html" %} {% block title %}{{ city }} - Weather{% endblock %} {%
 block content %}
-<header class="topbar">{% include "_search.html" %}
-<div class="unit-switch">
-    <a href="{{ url_for('weather', city=city, unit='c') }}"
-      class="{{ 'active' if unit == 'c' }}">°C</a>
-    <a href="{{ url_for('weather', city=city, unit='f') }}"
-      class="{{ 'active' if unit == 'f' }}">°F</a>
-</div>
+<header class="topbar">
+  <div class="theme-switch" role="group" aria-label="Color theme">
+    <button
+      class="{{ 'active' if theme == 'green' }}"
+      type="button"
+      data-theme-value="green"
+    >
+      Green
+    </button>
+    <button
+      class="{{ 'active' if theme == 'pink' }}"
+      type="button"
+      data-theme-value="pink"
+    >
+      Pink
+    </button>
+  </div>
+  {% include "_search.html" %}
+  <div class="unit-switch">
+    <a
+      href="{{ url_for('weather', city=city, unit='c') }}"
+      class="{{ 'active' if unit == 'c' }}"
+      >°C</a
+    >
+    <a
+      href="{{ url_for('weather', city=city, unit='f') }}"
+      class="{{ 'active' if unit == 'f' }}"
+      >°F</a
+    >
+  </div>
 </header>
 {% if data.error %}
 <h1>Nothing found for "{{ city }}"</h1>
@@ -16,10 +39,8 @@ block content %}
   endif %}
 </h1>
 <div class="dashboard">
-  {% include "cards/current-card.html" %}
-  {% include "cards/weekly-card.html" %}
-  {% include "cards/metrics-card.html" %}
-  {% include "cards/hourly-card.html" %}
+  {% include "cards/current-card.html" %} {% include "cards/weekly-card.html" %}
+  {% include "cards/metrics-card.html" %} {% include "cards/hourly-card.html" %}
   {% include "cards/sun-card.html" %}
 </div>
 {% endif %} {% endblock %}
